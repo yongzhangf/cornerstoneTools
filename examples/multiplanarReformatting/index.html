@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- support for mobile touch devices -->
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- twitter bootstrap CSS stylesheet - not required by cornerstoneTools -->
+    <link href="../bootstrap.min.css" rel="stylesheet">
+
+    <link href="../cornerstone.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>
+            MPR Example
+        </h1>
+        <p>
+
+        </p>
+        <a href="../index.html">Go back to the Examples page</a>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div style="width:512px;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 class='cornerstone-enabled-image'
+                 unselectable='on'
+                 onselectstart='return false;'
+                 onmousedown='return false;'>
+                <div id="dicomImageX"
+                     style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
+                </div>
+            </div>
+            <div style="width:512px;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 class='cornerstone-enabled-image'
+                 unselectable='on'
+                 onselectstart='return false;'
+                 onmousedown='return false;'>
+                <div id="dicomImageY"
+                     style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
+                </div>
+            </div>
+            <div style="width:512px;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 class='cornerstone-enabled-image'
+                 unselectable='on'
+                 onselectstart='return false;'
+                 onmousedown='return false;'>
+                <div id="dicomImageZ"
+                     style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+<!-- include the cornerstone library -->
+<script src="../cornerstone.min.js"></script>
+<script src="../cornerstoneMath.min.js"></script>
+
+<!-- include the cornerstone tools library -->
+<script src="../../dist/cornerstoneTools.js"></script>
+<script>window.cornerstoneTools || document.write('<script src="https://unpkg.com/cornerstone-tools">\x3C/script>')</script>
+
+<!-- include special code for these examples which provides images -->
+<script src="../exampleImageLoader.js"></script>
+
+<script>
+    var elementX = document.getElementById('dicomImageX');
+    var elementY = document.getElementById('dicomImageY');
+
+    var imageIds = [
+        'example://1',
+        'example://2',
+        'example://3'
+    ];
+
+    var stack = {
+        currentImageIdIndex : 0,
+        imageIds: imageIds,
+        stackId: 'stack-123'
+    };
+
+
+
+
+    // image enable the dicomImage element and the mouse inputs
+    cornerstone.enable(elementX);
+    cornerstoneTools.mouseInput.enable(elementX);
+    cornerstoneTools.mouseWheelInput.enable(elementX);
+
+    cornerstone.enable(elementY);
+    cornerstoneTools.mouseInput.enable(elementY);
+    cornerstoneTools.mouseWheelInput.enable(elementY);
+
+    cornerstone.loadImage(imageIds[stack.currentImageIdIndex]).then(function(image) {
+        // display this image
+        cornerstone.displayImage(elementX, image);
+
+        // set the stack as tool state
+        cornerstoneTools.addStackStateManager(elementX, ['stack']);
+        cornerstoneTools.addToolState(elementX, 'stack', stack);
+
+        // Enable all tools we want to use with this element
+        cornerstoneTools.stackScroll.activate(elementX, 1);
+        cornerstoneTools.stackScrollWheel.activate(elementX);
+
+        // Uncomment below to enable stack prefetching
+        // With the example images the loading will be extremely quick, though
+        cornerstoneTools.stackPrefetch.enable(elementX, 3);
+    });
+
+    var stackY = {
+      currentImageIdIndex : 0,
+      imageIds: [
+        'mpr://stack-123#x-50',
+        'mpr://stack-123#x-51'
+      ]
+    };
+
+
+    cornerstoneTools.MPR.registerLoaders(cornerstone);
+
+    cornerstone.loadImage(stackY.imageIds[stackY.currentImageIdIndex]).then(function(image) {
+      // display this image
+      cornerstone.displayImage(elementY, image);
+
+      // set the stack as tool state
+      cornerstoneTools.addStackStateManager(elementY, ['stack']);
+      cornerstoneTools.addToolState(elementX, 'stack', stackY);
+
+      // Enable all tools we want to use with this element
+      cornerstoneTools.stackScroll.activate(elementY, 1);
+      cornerstoneTools.stackScrollWheel.activate(elementY);
+
+      // Uncomment below to enable stack prefetching
+      // With the example images the loading will be extremely quick, though
+      cornerstoneTools.stackPrefetch.enable(elementY, 3);
+    });
+
+</script>
+</html>

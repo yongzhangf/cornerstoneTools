@@ -154,4 +154,7 @@ export { brush } from './paintingTools/brush.js';
 export { adaptiveBrush } from './paintingTools/adaptiveBrush.js';
 export { default as version } from './version.js';
 
+export { default as MPR } from './multiplanarReformatting/index.js';
+
+
 export { setToolOptions, getToolOptions } from './toolOptions.js';

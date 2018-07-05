@@ -80,7 +80,8 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "cornerstone-math": "^0.1.6"
+    "cornerstone-math": "^0.1.6",
+    "ndarray": "^1.0.18"
   },
   "files": [
     "dist/cornerstoneTools.js",
