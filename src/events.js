@@ -4,6 +4,7 @@ const EVENTS = {
   NEW_IMAGE: 'cornerstonenewimage',
   IMAGE_CACHE_PROMISE_REMOVED: 'cornerstoneimagecachepromiseremoved',
   ELEMENT_DISABLED: 'cornerstoneelementdisabled',
+  DRAW_ENDING: 'cornerstoneelementdrawending',
 
   // Mouse events
   MOUSE_DOWN: 'cornerstonetoolsmousedown',

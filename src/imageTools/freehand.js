@@ -311,6 +311,15 @@ function endDrawing (eventData, handleNearby) {
   config.currentTool = -1;
   config.activePencilMode = false;
   data.canComplete = false;
+  
+  // Trigger event on element draw ending
+  const drawEndingEventData = {
+    element: eventData.element,
+    toolType: toolType,
+    measurementData: data
+  };
+
+  triggerEvent(eventData.element, EVENTS.DRAW_ENDING, drawEndingEventData);
 
   external.cornerstone.updateImage(eventData.element);
 }

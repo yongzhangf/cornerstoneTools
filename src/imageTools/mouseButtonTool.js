@@ -95,6 +95,15 @@ export default function (mouseToolInterface) {
         removeToolState(element, toolType, data);
       }
 
+      // Trigger event on element draw ending
+      const drawEndingEventData = {
+        element: element,
+        toolType: toolType,
+        measurementData: data
+      };
+  
+      triggerEvent(element, EVENTS.DRAW_ENDING, drawEndingEventData);
+
       external.cornerstone.updateImage(element);
       element.addEventListener(EVENTS.MOUSE_MOVE, mouseMove);
     }
@@ -226,6 +235,15 @@ export default function (mouseToolInterface) {
       if (mouseDoubleClick) {
         element.addEventListener(EVENTS.MOUSE_DOUBLE_CLICK, mouseDoubleClick);
       }
+
+      // Trigger event on element draw ending
+      const drawEndingEventData = {
+        element: element,
+        toolType: toolType,
+        measurementData: measurementData
+      };
+  
+      triggerEvent(element, EVENTS.DRAW_ENDING, drawEndingEventData);
 
       cornerstone.updateImage(element);
     }, preventHandleOutsideImage);
